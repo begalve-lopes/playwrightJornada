@@ -6,5 +6,6 @@ test.describe('Cadastro',()=>{
         const novoUsuario =  gerarPerfil()
         await paginaCadastro.preencherFormulario(novoUsuario);
         await paginaCadastro.submeterFormulario();
+        await paginaCadastro.cadastroFeitoComSucesso()
     })
 })

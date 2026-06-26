@@ -17,7 +17,7 @@ export default class PaginaCadastro {
     private readonly inputConfirmarSenha: Locator;
     private readonly botaoSubmeterForm: Locator;
     private readonly checkboxTermos: Locator;
-    
+
     // Mapeamento limpo e tipado corretamente com o Enum corrigido
     private readonly mapeamentoGenero: Record<Genero, string> = {
         [Genero.FEMININO]: 'Feminino',
@@ -30,7 +30,7 @@ export default class PaginaCadastro {
 
         this.botaoVisitarPaginanaCadastro = page.getByRole('button', { name: 'CADASTRE-SE' });
         this.inputNome = page.getByRole('textbox', { name: 'Nome' });
-        this.inputDataNascimento = page.getByRole('textbox', { name: 'Data de Nascimento' }) ;
+        this.inputDataNascimento = page.getByRole('textbox', { name: 'Data de Nascimento' });
         this.inputCpf = page.getByRole('textbox', { name: 'CPF' });
         this.inputCidade = page.getByRole('textbox', { name: 'Cidade' });
         this.inputTelefone = page.getByRole('textbox', { name: 'Telefone' });
@@ -56,29 +56,33 @@ export default class PaginaCadastro {
     async preencherFormulario(perfil: Perfil) {
         await this.inputNome.fill(perfil.nome);
         await this.inputDataNascimento.fill(perfil.dataNascimento);
-        
+
         const textoDoGenero = this.mapeamentoGenero[perfil.genero];
         await this.page.getByRole('radio', { name: textoDoGenero }).click();
-        
+
         await this.inputCpf.fill(perfil.cpf);
         await this.inputTelefone.fill(perfil.telefone);
-        
+
         await this.inputCidade.fill(perfil.cidade);
         await this.inputCidade.press('Enter');
-        
+
         await this.inputEstado.fill(perfil.estado);
         await this.inputEstado.press('Enter');
-        
+
         await this.inputEmail.fill(perfil.email);
         await this.inputSenha.fill(perfil.senha);
         await this.inputConfirmarEmail.fill(perfil.email);
         await this.inputConfirmarSenha.fill(perfil.senha);
-        
+
         await this.checkboxTermos.check();
     }
 
     async submeterFormulario() {
         await this.botaoSubmeterForm.click();
+    }
+
+    async cadastroFeitoComSucesso(){
+        await expect(this.page).toHaveURL('/auth/login');
     }
 
     async estaMostrandoMensagemErro(mensagem: string) {
