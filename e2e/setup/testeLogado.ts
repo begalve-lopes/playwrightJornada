@@ -1,4 +1,5 @@
 import * as path from "path";
+import * as fs from "fs"
 import { test } from "./fixtures";
 import PaginaCadastro from "../page_objects/PaginaCadastro";
 import PaginaLogin from "../page_objects/PaginaLogin";
@@ -13,6 +14,11 @@ export const testeLogado = test.extend<object, { arquivoInfoLogado: string }>({
                 test.info().project.outputDir,
                 `.auth/usuario-${id}.json`
             );
+
+            if(fs.existsSync(caminhoArquivo)){
+                await use(caminhoArquivo)
+                return;
+            }
 
             // 👇 Lê a baseURL diretamente do config do projeto
             const baseURL = test.info().project.use.baseURL ?? 'http://localhost:4200';
@@ -41,6 +47,8 @@ export const testeLogado = test.extend<object, { arquivoInfoLogado: string }>({
             await context.storageState({ path: caminhoArquivo });
 
             await use(caminhoArquivo);
+
+            await page.close()
         },
         { scope: "worker" }
     ],
