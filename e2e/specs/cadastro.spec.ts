@@ -9,13 +9,14 @@ test.describe('Cadastro', () => {
     })
 
     test('Deve conseguir fazer cadastro', async ({ paginaCadastro }) => {
-
+        await paginaCadastro.visitar()
         await paginaCadastro.preencherFormulario(novoUsuario);
         await paginaCadastro.submeterFormulario();
         await paginaCadastro.cadastroFeitoComSucesso()
     })
 
     test('Não Deve permitir usuário duplicado', async ({ paginaCadastro }) => {
+        await paginaCadastro.visitar()
         await paginaCadastro.preencherFormulario(novoUsuario);
         await paginaCadastro.submeterFormulario();
         await paginaCadastro.cadastroFeitoComSucesso()
