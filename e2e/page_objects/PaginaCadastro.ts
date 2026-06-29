@@ -9,6 +9,7 @@ export default class PaginaCadastro {
     private readonly botaoVisitarPaginanaCadastro: Locator;
 
     private readonly checkboxTermos: Locator;
+    private readonly botaoSubmeterForm: Locator;
 
 
 
@@ -16,9 +17,8 @@ export default class PaginaCadastro {
         this.page = page;
         this.formBase = new FormBaseCadastroEPerfil(page)
 
-
         this.botaoVisitarPaginanaCadastro = page.getByRole('button', { name: 'CADASTRE-SE' });
-
+        this.botaoSubmeterForm = page.getByRole('button', { name: 'Cadastrar' });
         this.checkboxTermos = page
             .getByRole('checkbox', { name: 'Li e aceito os termos e condi' });
     }
@@ -36,7 +36,7 @@ export default class PaginaCadastro {
     }
 
     async submeterFormulario() {
-        await this.formBase.submeterFormulario()
+        await this.botaoSubmeterForm.click();
     }
 
     async cadastroFeitoComSucesso() {

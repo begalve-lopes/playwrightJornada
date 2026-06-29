@@ -14,7 +14,7 @@ export default class FormBaseCadastroEPerfil {
     private readonly inputSenha: Locator;
     private readonly inputConfirmarEmail: Locator;
     private readonly inputConfirmarSenha: Locator;
-    private readonly botaoSubmeterForm: Locator;
+    // private readonly botaoSubmeterForm: Locator;
 
 
     // Mapeamento limpo e tipado corretamente com o Enum corrigido
@@ -40,7 +40,6 @@ export default class FormBaseCadastroEPerfil {
         this.inputConfirmarEmail = page.getByRole('textbox', { name: 'Confirmar E-mail' });
         this.inputConfirmarSenha = page.getByRole('textbox', { name: 'Confirmar Senha' });
 
-        this.botaoSubmeterForm = page.getByRole('button', { name: 'Cadastrar' });
 
     }
 
@@ -66,8 +65,10 @@ export default class FormBaseCadastroEPerfil {
         await this.inputConfirmarSenha.fill(perfil.senha);
 
     }
-
-    async submeterFormulario() {
-        await this.botaoSubmeterForm.click();
+    
+    async obterValorInputEmail() {
+        return this.inputEmail.inputValue();
     }
+
+    
 }

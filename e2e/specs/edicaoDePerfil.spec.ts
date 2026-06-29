@@ -1,11 +1,19 @@
 import { testeLogado } from "../setup/testeLogado";
+import { gerarPerfil } from "../util/gerarPerfil";
 
-testeLogado.describe('Edição do Usuário',()=>{
-    testeLogado('Editar  perfil 1', async({paginaPrincipal})=>{
-        await paginaPrincipal.visitar();
+testeLogado.describe('Edição do Usuário', () => {
+    testeLogado('Deve conseguir editar o perfil', async ({ paginaPerfil }) => {
+        await paginaPerfil.visitar();
+        const usarioAtualizado = gerarPerfil();
+        const emailAtual = await paginaPerfil.formBase.obterValorInputEmail();
+        await paginaPerfil.atualizarUsuario({ ...usarioAtualizado, email: emailAtual });
+        await paginaPerfil.submeterAtualizacao();
+        await paginaPerfil.atualizadoComSucesso();
     })
 
-    testeLogado('Editar  perfil 2', async()=>{
-     
+    testeLogado('Deve fazer logout', async ({paginaPerfil}) => {
+        await paginaPerfil.visitar();
+        await paginaPerfil.fazerLogout();
+        await paginaPerfil.validarLogout();
     })
 })
