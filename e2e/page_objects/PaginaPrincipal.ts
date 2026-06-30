@@ -17,6 +17,7 @@ export default class PaginaPrincipal {
     private readonly containerOrigem: Locator;
     private readonly containerDestino: Locator;
     private readonly botaoComprar: Locator;
+    private readonly boataoDefinirPassagemExecutiva: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -31,6 +32,7 @@ export default class PaginaPrincipal {
         this.botaoFecharModalPassageiros = page.getByTestId('fechar-modal-passageiros');
 
         this.campoDropdownOrigem = page.getByTestId('campo-dropdown-origem').getByLabel('Origem');
+        this.boataoDefinirPassagemExecutiva= page.getByTestId('botao-passagem-executiva');
         this.campoDropdownDestino = page.getByTestId('campo-dropdown-destino').getByLabel('Destino');
 
         this.campoDataIda = page.getByTestId('campo-data-ida');
@@ -70,6 +72,10 @@ export default class PaginaPrincipal {
         for (let i = 0; i < quantidade; i++) {
             await this.botaoIncrementarBebes.click();
         }
+    }
+
+    async definirPassagemExecutiva(){
+        await this.boataoDefinirPassagemExecutiva.click()
     }
 
     async fecharModalPassageiro() {
